@@ -36,6 +36,14 @@ internal class SearchResultVideoExtractor
             .ConcatToString()
     );
 
+    public string? TryGetViewCount() => Memo.Cache(this, () => 
+        _content
+            .GetPropertyOrNull("viewCountText")?
+            .GetPropertyOrNull("simpleText")?
+            .GetStringOrNull()?
+            .Replace("views", "")
+            .Replace("view", "").Trim() ?? "");
+
     private JsonElement? TryGetVideoAuthorDetails() => Memo.Cache(this, () =>
         _content
             .GetPropertyOrNull("longBylineText")?
