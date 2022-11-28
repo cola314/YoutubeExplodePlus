@@ -32,7 +32,7 @@ public class VideoSearchResult : ISearchResult, IVideo
     public string ViewCount { get; }
 
     /// <summary>
-    /// Initializes an instance of <see cref="VideoSearchResult"/>.
+    /// Initializes an instance of <see cref="VideoSearchResult" />.
     /// </summary>
     public VideoSearchResult(
         VideoId id,

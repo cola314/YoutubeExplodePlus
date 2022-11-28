@@ -2,7 +2,7 @@
 
   <PropertyGroup>
 	<PackageId>cola314.YoutubeExplodePlus</PackageId>
-    <Version>6.2.1-plus</Version>
+    <Version>6.2.4-plus</Version>
     <Company>Tyrrrz</Company>
     <Copyright>Copyright (C) Oleksii Holub</Copyright>
     <LangVersion>latest</LangVersion>
@@ -22,7 +22,7 @@
     <PackageProjectUrl>https://github.com/cola314/YoutubeExplodePlus</PackageProjectUrl>
     <PackageReleaseNotes>https://github.com/cola314/YoutubeExplodePlus/blob/master/Changelog.md</PackageReleaseNotes>
 	<Title>cola314.YoutubeExplodePlus</Title>
-    <PackageReadmeFile>ReadMe.md</PackageReadmeFile>
+    <PackageReadmeFile>Readme.md</PackageReadmeFile>
     <PackageIcon>favicon.png</PackageIcon>
     <PackageLicenseExpression>LGPL-3.0-only</PackageLicenseExpression>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
@@ -32,7 +32,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="../ReadMe.md" Pack="true" PackagePath="" Visible="false" />
+    <None Include="../Readme.md" Pack="true" PackagePath="" Visible="false" />
     <None Include="../favicon.png" Pack="true" PackagePath="" Visible="false" />
   </ItemGroup>
 

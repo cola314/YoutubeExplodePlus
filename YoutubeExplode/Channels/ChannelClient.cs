@@ -21,7 +21,7 @@ public class ChannelClient
     private readonly ChannelController _controller;
 
     /// <summary>
-    /// Initializes an instance of <see cref="ChannelClient"/>.
+    /// Initializes an instance of <see cref="ChannelClient" />.
     /// </summary>
     public ChannelClient(HttpClient http)
     {
@@ -80,6 +80,14 @@ public class ChannelClient
         ChannelSlug channelSlug,
         CancellationToken cancellationToken = default) =>
         Extract(await _controller.GetChannelPageAsync(channelSlug, cancellationToken));
+
+    /// <summary>
+    /// Gets the metadata associated with the channel identified by the specified handle or handle URL.
+    /// </summary>
+    public async ValueTask<Channel> GetByHandleAsync(
+        ChannelHandle channelHandle,
+        CancellationToken cancellationToken = default) =>
+        Extract(await _controller.GetChannelPageAsync(channelHandle, cancellationToken));
 
     /// <summary>
     /// Enumerates videos uploaded by the specified channel.
