@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Net;
 using System.Text.RegularExpressions;
 using YoutubeExplode.Utils.Extensions;
 
@@ -38,7 +39,12 @@ public readonly partial struct ChannelHandle
 
         // URL
         // https://www.youtube.com/@Tyrrrz
-        var regularMatch = Regex.Match(channelHandleOrUrl, @"youtube\..+?/@(.*?)(?:\?|&|/|$)").Groups[1].Value;
+        var regularMatch = Regex
+            .Match(channelHandleOrUrl, @"youtube\..+?/@(.*?)(?:\?|&|/|$)")
+            .Groups[1]
+            .Value
+            .Pipe(WebUtility.UrlDecode);
+
         if (!string.IsNullOrWhiteSpace(regularMatch) && IsValid(regularMatch))
             return regularMatch;
 
@@ -47,18 +53,18 @@ public readonly partial struct ChannelHandle
     }
 
     /// <summary>
-    /// Attempts to parse the specified string as a YouTube channel handle or handle URL.
+    /// Attempts to parse the specified string as a YouTube channel handle or custom URL.
     /// Returns null in case of failure.
     /// </summary>
     public static ChannelHandle? TryParse(string? channelHandleOrUrl) =>
         TryNormalize(channelHandleOrUrl)?.Pipe(handle => new ChannelHandle(handle));
 
     /// <summary>
-    /// Parses the specified string as a YouTube channel handle or handle URL.
+    /// Parses the specified string as a YouTube channel handle or custom URL.
     /// </summary>
     public static ChannelHandle Parse(string channelHandleOrUrl) =>
         TryParse(channelHandleOrUrl) ??
-        throw new ArgumentException($"Invalid YouTube channel handle or handle URL '{channelHandleOrUrl}'.");
+        throw new ArgumentException($"Invalid YouTube channel handle or custom URL '{channelHandleOrUrl}'.");
 
     /// <summary>
     /// Converts string to channel handle.
