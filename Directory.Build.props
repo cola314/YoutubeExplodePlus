@@ -1,7 +1,8 @@
 <Project>
 
   <PropertyGroup>
-    <Version>6.3.2</Version>
+	<PackageId>cola314.YoutubeExplodePlus</PackageId>
+    <Version>6.3.2-plus</Version>
     <Company>Tyrrrz</Company>
     <Copyright>Copyright (C) Oleksii Holub</Copyright>
     <LangVersion>latest</LangVersion>
@@ -19,10 +20,12 @@
 
   <PropertyGroup>
     <Authors>$(Company)</Authors>
-    <PackageTags>youtube video download playlist user channel closed caption tracks subtitles parse extract metadata info net core standard</PackageTags>
-    <PackageProjectUrl>https://github.com/Tyrrrz/YoutubeExplode</PackageProjectUrl>
-    <PackageReleaseNotes>https://github.com/Tyrrrz/YoutubeExplode/blob/master/Changelog.md</PackageReleaseNotes>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageTags>Forked from YoutubeExplodePlus by syntaxerror00100 that forked from Original YoutubeExplode by Tyrrrz with additional properties.</PackageTags>
+    <PackageProjectUrl>https://github.com/cola314/YoutubeExplodePlus</PackageProjectUrl>
+    <PackageReleaseNotes>https://github.com/cola314/YoutubeExplodePlus/blob/master/Changelog.md</PackageReleaseNotes>
+	<Title>cola314.YoutubeExplodePlus</Title>
+    <PackageReadmeFile>Readme.md</PackageReadmeFile>
+	<PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>

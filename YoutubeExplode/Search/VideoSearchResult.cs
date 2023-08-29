@@ -29,6 +29,8 @@ public class VideoSearchResult : ISearchResult, IVideo
     /// <inheritdoc />
     public IReadOnlyList<Thumbnail> Thumbnails { get; }
 
+    public string ViewCount { get; }
+
     /// <summary>
     /// Initializes an instance of <see cref="VideoSearchResult" />.
     /// </summary>
@@ -37,7 +39,8 @@ public class VideoSearchResult : ISearchResult, IVideo
         string title,
         Author author,
         TimeSpan? duration,
-        IReadOnlyList<Thumbnail> thumbnails
+        IReadOnlyList<Thumbnail> thumbnails,
+        string viewCount
     )
     {
         Id = id;
@@ -45,6 +48,7 @@ public class VideoSearchResult : ISearchResult, IVideo
         Author = author;
         Duration = duration;
         Thumbnails = thumbnails;
+        ViewCount = viewCount;
     }
 
     /// <inheritdoc />

@@ -75,6 +75,10 @@ public class SearchClient
                     videoData.ChannelId
                     ?? throw new YoutubeExplodeException("Could not extract video channel ID.");
 
+                var videoViewCount =
+                    videoData.ViewCount
+                    ?? throw new YoutubeExplodeException("Could not extract video view count.");
+
                 var videoThumbnails = videoData.Thumbnails
                     .Select(t =>
                     {
@@ -108,7 +112,8 @@ public class SearchClient
                     videoTitle,
                     new Author(videoChannelId, videoChannelTitle),
                     videoData.Duration,
-                    videoThumbnails
+                    videoThumbnails,
+                    videoViewCount
                 );
 
                 results.Add(video);

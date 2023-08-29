@@ -1,3 +1,7 @@
+
+# - Added video search result number of views
+
+
 # YoutubeExplode
 
 [![Status](https://img.shields.io/badge/status-maintenance-ffd700.svg)](https://github.com/Tyrrrz/.github/blob/master/docs/project-status.md)

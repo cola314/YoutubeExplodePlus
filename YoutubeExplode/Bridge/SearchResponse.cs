@@ -113,6 +113,16 @@ internal partial class SearchResponse
                 .ParseTimeSpanOrNull(new[] { @"m\:ss", @"mm\:ss", @"h\:mm\:ss", @"hh\:mm\:ss" });
 
         [Lazy]
+        public string? ViewCount =>
+            _content
+                .GetPropertyOrNull("viewCountText")
+                ?.GetPropertyOrNull("simpleText")
+                ?.GetStringOrNull()
+                ?.Replace("views", "")
+                .Replace("view", "")
+                .Trim() ?? "";
+
+        [Lazy]
         public IReadOnlyList<ThumbnailData> Thumbnails =>
             _content
                 .GetPropertyOrNull("thumbnail")

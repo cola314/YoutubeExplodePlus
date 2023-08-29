@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using YoutubeExplode.Demo.Cli.Utils;
+using YoutubeExplode.Search;
 using YoutubeExplode.Videos;
 using YoutubeExplode.Videos.Streams;
 
@@ -16,6 +17,40 @@ public static class Program
         Console.Title = "YoutubeExplode Demo";
 
         var youtube = new YoutubeClient();
+
+        int totalVideoResult = 1;
+        await foreach (var result in youtube.Search.GetResultsAsync("NFT"))
+        {
+            // Use pattern matching to handle different results (videos, playlists, channels)
+            switch (result)
+            {
+                case VideoSearchResult videoResult:
+                {
+                    var id = videoResult.Id;
+                    var title = videoResult.Title;
+                    var duration = videoResult.Duration;
+                    var totalViews = videoResult.ViewCount;
+
+                    Console.WriteLine(title);
+
+                    totalVideoResult += 1;
+
+                    break;
+                }
+                //case PlaylistSearchResult playlistResult:
+                //{
+                //    var id = playlistResult.Id;
+                //    var title = playlistResult.Title;
+                //    break;
+                //}
+                //case ChannelSearchResult channelResult:
+                //{
+                //    var id = channelResult.Id;
+                //    var title = channelResult.Title;
+                //    break;
+                //}
+            }
+        }
 
         // Get the video ID
         Console.Write("Enter YouTube video ID or URL: ");
