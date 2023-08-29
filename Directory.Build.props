@@ -24,7 +24,6 @@
     <PackageProjectUrl>https://github.com/cola314/YoutubeExplodePlus</PackageProjectUrl>
     <PackageReleaseNotes>https://github.com/cola314/YoutubeExplodePlus/blob/master/Changelog.md</PackageReleaseNotes>
 	<Title>cola314.YoutubeExplodePlus</Title>
-    <PackageReadmeFile>Readme.md</PackageReadmeFile>
 	<PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
