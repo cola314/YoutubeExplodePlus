@@ -16,7 +16,7 @@ public static class FFmpeg
 {
     private static readonly SemaphoreSlim Lock = new(1, 1);
 
-    public static Version Version { get; } = new(4, 4, 1);
+    public static Version Version { get; } = new(6, 1);
 
     private static string FileName { get; } =
         RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? "ffmpeg.exe" : "ffmpeg";
@@ -33,7 +33,7 @@ public static class FFmpeg
         static string GetPlatformMoniker()
         {
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-                return "win";
+                return "windows";
 
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                 return "linux";
@@ -47,16 +47,13 @@ public static class FFmpeg
         static string GetArchitectureMoniker()
         {
             if (RuntimeInformation.ProcessArchitecture == Architecture.X64)
-                return "64";
+                return "x64";
 
             if (RuntimeInformation.ProcessArchitecture == Architecture.X86)
-                return "32";
+                return "x86";
 
             if (RuntimeInformation.ProcessArchitecture == Architecture.Arm64)
-                return "arm-64";
-
-            if (RuntimeInformation.ProcessArchitecture == Architecture.Arm)
-                return "arm";
+                return "arm64";
 
             throw new NotSupportedException("Unsupported architecture.");
         }
@@ -64,7 +61,7 @@ public static class FFmpeg
         var plat = GetPlatformMoniker();
         var arch = GetArchitectureMoniker();
 
-        return $"https://github.com/vot/ffbinaries-prebuilt/releases/download/v{Version}/ffmpeg-{Version}-{plat}-{arch}.zip";
+        return $"https://github.com/Tyrrrz/FFmpegBin/releases/download/{Version}/ffmpeg-{plat}-{arch}.zip";
     }
 
     private static byte[] GetDownloadHash()
@@ -73,26 +70,29 @@ public static class FFmpeg
         {
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-                // Only x64 build is available
-                return "d1124593b7453fc54dd90ca3819dc82c22ffa957937f33dd650082f1a495b10e";
+                if (RuntimeInformation.ProcessArchitecture == Architecture.X64)
+                    return "48130a80aebffb61d06913350c3ad3187efd85096f898045fd65001bf89d7d7f";
+
+                if (RuntimeInformation.ProcessArchitecture == Architecture.X86)
+                    return "71e83e4d5b4ed8e9e5b13a8bc118b73affef2ff12f9e14c388bfb17db7008f8d";
+
+                if (RuntimeInformation.ProcessArchitecture == Architecture.Arm64)
+                    return "cd2d765565d1cc36e3fc0653d8ad6444c1736b883144de885c1f178a404c977c";
             }
 
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
             {
                 if (RuntimeInformation.ProcessArchitecture == Architecture.X64)
-                    return "4348301b0d5e18174925e2022da1823aebbdb07282bbe9adb64b2485e1ef2df7";
-
-                if (RuntimeInformation.ProcessArchitecture == Architecture.X86)
-                    return "a292731806fe3733b9e2281edba881d1035e4018599577174a54e275c0afc931";
-
-                if (RuntimeInformation.ProcessArchitecture == Architecture.Arm64)
-                    return "7d57e730cc34208743cc1a97134541656ecd2c3adcdfad450dedb61d465857da";
+                    return "856b4f0e5cd9de45c98b703f7258d578bbdc0ac818073a645315241f9e7d5780";
             }
 
             if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
             {
-                // Only x64 build is available
-                return "e08c670fcbdc2e627aa4c0d0c5ee1ef20e82378af2f14e4e7ae421a148bd49af";
+                if (RuntimeInformation.ProcessArchitecture == Architecture.X64)
+                    return "1671abe5dcc0b4adfaea6f2e531e377a3ccd8ea21aa2b5a0589b0e5ae7d85a37";
+
+                if (RuntimeInformation.ProcessArchitecture == Architecture.Arm64)
+                    return "bcbc7de089f68c3565dd40e8fe462df28a181af8df756621fc4004a747b845cf";
             }
 
             throw new NotSupportedException("Unsupported architecture.");
@@ -110,10 +110,10 @@ public static class FFmpeg
     private static async ValueTask DownloadAsync()
     {
         using var archiveFile = TempFile.Create();
-        using var httpClient = new HttpClient();
+        using var http = new HttpClient();
 
         // Download the archive
-        await httpClient.DownloadAsync(GetDownloadUrl(), archiveFile.Path);
+        await http.DownloadAsync(GetDownloadUrl(), archiveFile.Path);
 
         // Verify the hash
         await using (var archiveStream = File.OpenRead(archiveFile.Path))

@@ -9,47 +9,35 @@ namespace YoutubeExplode.Search;
 /// <summary>
 /// Metadata associated with a YouTube video returned by a search query.
 /// </summary>
-public class VideoSearchResult : ISearchResult, IVideo
+public class VideoSearchResult(
+    VideoId id,
+    string title,
+    Author author,
+    TimeSpan? duration,
+    IReadOnlyList<Thumbnail> thumbnails,
+    string viewCount
+) : ISearchResult, IVideo
 {
     /// <inheritdoc />
-    public VideoId Id { get; }
+    public VideoId Id { get; } = id;
 
     /// <inheritdoc cref="IVideo.Url" />
     public string Url => $"https://www.youtube.com/watch?v={Id}";
 
     /// <inheritdoc cref="IVideo.Title" />
-    public string Title { get; }
+    public string Title { get; } = title;
 
     /// <inheritdoc />
-    public Author Author { get; }
+    public Author Author { get; } = author;
 
     /// <inheritdoc />
-    public TimeSpan? Duration { get; }
+    public TimeSpan? Duration { get; } = duration;
 
     /// <inheritdoc />
-    public IReadOnlyList<Thumbnail> Thumbnails { get; }
+    public string ViewCount { get; } = viewCount;
 
-    public string ViewCount { get; }
-
-    /// <summary>
-    /// Initializes an instance of <see cref="VideoSearchResult" />.
-    /// </summary>
-    public VideoSearchResult(
-        VideoId id,
-        string title,
-        Author author,
-        TimeSpan? duration,
-        IReadOnlyList<Thumbnail> thumbnails,
-        string viewCount
-    )
-    {
-        Id = id;
-        Title = title;
-        Author = author;
-        Duration = duration;
-        Thumbnails = thumbnails;
-        ViewCount = viewCount;
-    }
+    /// <inheritdoc />
+    public IReadOnlyList<Thumbnail> Thumbnails { get; } = thumbnails;
 
     /// <inheritdoc />
     [ExcludeFromCodeCoverage]

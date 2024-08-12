@@ -2,7 +2,7 @@
 
   <PropertyGroup>
 	<PackageId>cola314.YoutubeExplodePlus</PackageId>
-    <Version>6.3.6-plus</Version>
+    <Version>6.4-plus</Version>
     <Company>Tyrrrz</Company>
     <Copyright>Copyright (C) Oleksii Holub</Copyright>
     <LangVersion>latest</LangVersion>
@@ -29,6 +29,7 @@
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <DebugType>embedded</DebugType>
+    <Description>Abstraction layer over YouTube's internal API. Note: this package has limited availability in Russia and Belarus.</Description>
   </PropertyGroup>
 
 </Project>

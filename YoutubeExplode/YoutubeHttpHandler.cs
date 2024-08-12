@@ -49,8 +49,8 @@ internal class YoutubeHttpHandler : ClientDelegatingHandler
 
         var sessionId =
             cookies
-                .FirstOrDefault(
-                    c => string.Equals(c.Name, "__Secure-3PAPISID", StringComparison.Ordinal)
+                .FirstOrDefault(c =>
+                    string.Equals(c.Name, "__Secure-3PAPISID", StringComparison.Ordinal)
                 )
                 ?.Value
             ?? cookies
@@ -153,7 +153,20 @@ internal class YoutubeHttpHandler : ClientDelegatingHandler
         if (response.Headers.TryGetValues("Set-Cookie", out var cookieHeaderValues))
         {
             foreach (var cookieHeaderValue in cookieHeaderValues)
-                _cookieContainer.SetCookies(response.RequestMessage.RequestUri, cookieHeaderValue);
+            {
+                try
+                {
+                    _cookieContainer.SetCookies(
+                        response.RequestMessage.RequestUri,
+                        cookieHeaderValue
+                    );
+                }
+                catch (CookieException)
+                {
+                    // YouTube may send cookies for other domains, ignore them
+                    // https://github.com/Tyrrrz/YoutubeExplode/issues/762
+                }
+            }
         }
 
         return response;
@@ -166,25 +179,22 @@ internal class YoutubeHttpHandler : ClientDelegatingHandler
     {
         for (var retriesRemaining = 5; ; retriesRemaining--)
         {
-            try
+            var response = HandleResponse(
+                await base.SendAsync(
+                    // Request will be cloned by the base handler
+                    HandleRequest(request),
+                    cancellationToken
+                )
+            );
+
+            // Retry on 5XX errors
+            if ((int)response.StatusCode >= 500 && retriesRemaining > 0)
             {
-                using var clonedRequest = request.Clone();
-
-                var response = HandleResponse(
-                    await base.SendAsync(HandleRequest(clonedRequest), cancellationToken)
-                );
-
-                // Retry on 5XX errors
-                if ((int)response.StatusCode >= 500 && retriesRemaining > 0)
-                {
-                    response.Dispose();
-                    continue;
-                }
-
-                return response;
+                response.Dispose();
+                continue;
             }
-            // Retry on connectivity issues
-            catch (HttpRequestException) when (retriesRemaining > 0) { }
+
+            return response;
         }
     }
 }
